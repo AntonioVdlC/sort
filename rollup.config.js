@@ -7,7 +7,6 @@ export default [
     output: {
       file: "dist/index.cjs.js",
       format: "cjs",
-      exports: "default",
     },
     plugins: [
       typescript(),
