@@ -15,7 +15,7 @@
     "type:check": "tsc --noEmit",
     "format": "prettier --write --ignore-unknown {src,test}/*",
     "format:check": "prettier --check {src,test}/*",
-    "test": "TZ=UTC jest",
+    "test": "jest",
     "pre-commit": "lint-staged",
     "prebuild": "rimraf dist && mkdir dist",
     "build": "npm run build:types && npm run build:lib",
