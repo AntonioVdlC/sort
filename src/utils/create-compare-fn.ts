@@ -24,16 +24,17 @@ function createCompareFunction(
   fn.desc = (a: Compare, b: Compare) => fn(a, b, -1);
 
   fn.by = (key: string) => {
-    const direction = key.charAt(0) === "-" ? -1 : 1;
-
-    return function (a: Object, b: Object): number {
-      const keyPath = key.charAt(0) === "-" ? key.slice(1) : key;
-
-      const aVal = coerceType(getValueByKey(a, keyPath));
-      const bVal = coerceType(getValueByKey(b, keyPath));
+    function compareBy(a: Object, b: Object, direction: number = 1): number {
+      const aVal = coerceType(getValueByKey(a, key));
+      const bVal = coerceType(getValueByKey(b, key));
 
       return compareFn(aVal, bVal, direction);
-    };
+    }
+
+    compareBy.asc = (a: Compare, b: Compare) => compareBy(a, b, 1);
+    compareBy.desc = (a: Compare, b: Compare) => compareBy(a, b, -1);
+
+    return compareBy;
   };
 
   return fn;

@@ -73,6 +73,25 @@ describe("alphabetically", () => {
       expect(actual).toEqual(expected);
     });
 
+    it("sorts an array of object by a string field (asc)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Alice", age: 32 },
+        { name: "Bob", age: 23 },
+        { name: "Candice", age: 45 },
+        { name: "Tom", age: 60 },
+      ];
+      const actual = arr.sort(alphabetically.by("name").asc);
+
+      expect(actual).toEqual(expected);
+    });
+
     it("sorts an array of object by a string field (desc)", () => {
       const arr = [
         { name: "Bob", age: 23 },
@@ -87,7 +106,7 @@ describe("alphabetically", () => {
         { name: "Bob", age: 23 },
         { name: "Alice", age: 32 },
       ];
-      const actual = arr.sort(alphabetically.by("-name"));
+      const actual = arr.sort(alphabetically.by("name").desc);
 
       expect(actual).toEqual(expected);
     });
@@ -245,7 +264,7 @@ describe("chronologically", () => {
         { name: "Bob", age: 23, date: { joined: new Date("01-01-2012") } },
         { name: "Tom", age: 60, date: { joined: new Date("01-01-2001") } },
       ];
-      const actual = arr.sort(chronologically.by("-date.joined"));
+      const actual = arr.sort(chronologically.by("date.joined").desc);
 
       expect(actual).toEqual(expected);
     });
@@ -334,7 +353,7 @@ describe("numerically", () => {
         { name: "Alice", age: 32 },
         { name: "Bob", age: 23 },
       ];
-      const actual = arr.sort(numerically.by("-age"));
+      const actual = arr.sort(numerically.by("age").desc);
 
       expect(actual).toEqual(expected);
     });
