@@ -10,7 +10,7 @@ describe("alphabetically", () => {
     expect(typeof alphabetically).toBe("function");
   });
 
-  it("sorts an array of numbers correctly (asc by default)", () => {
+  it("sorts an array of strings correctly (asc by default)", () => {
     const arr = ["Bob", "Alice", "Tom", "Candice"];
 
     const expected = ["Alice", "Bob", "Candice", "Tom"];
@@ -24,7 +24,7 @@ describe("alphabetically", () => {
       expect(typeof alphabetically.desc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (desc)", () => {
+    it("sorts an array of strings correctly (desc)", () => {
       const arr = ["Bob", "Alice", "Tom", "Candice"];
 
       const expected = ["Tom", "Candice", "Bob", "Alice"];
@@ -39,11 +39,76 @@ describe("alphabetically", () => {
       expect(typeof alphabetically.asc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (asc)", () => {
+    it("sorts an array of strings correctly (asc)", () => {
       const arr = ["Bob", "Alice", "Tom", "Candice"];
 
       const expected = ["Alice", "Bob", "Candice", "Tom"];
       const actual = arr.sort(alphabetically.asc);
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("alphabetically.by", () => {
+    it("is a function", () => {
+      expect(typeof alphabetically.by).toBe("function");
+    });
+
+    it("sorts an array of object by a string field (asc by default)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Alice", age: 32 },
+        { name: "Bob", age: 23 },
+        { name: "Candice", age: 45 },
+        { name: "Tom", age: 60 },
+      ];
+      const actual = arr.sort(alphabetically.by("name"));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it("sorts an array of object by a string field (desc)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+      ];
+      const actual = arr.sort(alphabetically.by("-name"));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it("sorts an array of object by a string field (null present)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        null,
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Alice", age: 32 },
+        { name: "Bob", age: 23 },
+        { name: "Candice", age: 45 },
+        { name: "Tom", age: 60 },
+        null,
+      ];
+      const actual = arr.sort(alphabetically.by("name"));
 
       expect(actual).toEqual(expected);
     });
@@ -55,7 +120,7 @@ describe("alphabeticallyBase", () => {
     expect(typeof alphabeticallyBase).toBe("function");
   });
 
-  it("sorts an array of numbers correctly (asc by default)", () => {
+  it("sorts an array of strings correctly (asc by default)", () => {
     const arr = ["bob", "Alice", "tom", "Candice"];
 
     const expected = ["Alice", "bob", "Candice", "tom"];
@@ -69,7 +134,7 @@ describe("alphabeticallyBase", () => {
       expect(typeof alphabeticallyBase.desc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (desc)", () => {
+    it("sorts an array of strings correctly (desc)", () => {
       const arr = ["bob", "Alice", "tom", "Candice"];
 
       const expected = ["tom", "Candice", "bob", "Alice"];
@@ -84,7 +149,7 @@ describe("alphabeticallyBase", () => {
       expect(typeof alphabeticallyBase.asc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (asc)", () => {
+    it("sorts an array of strings correctly (asc)", () => {
       const arr = ["bob", "Alice", "tom", "Candice"];
 
       const expected = ["Alice", "bob", "Candice", "tom"];
@@ -100,7 +165,7 @@ describe("chronologically", () => {
     expect(typeof chronologically).toBe("function");
   });
 
-  it("sorts an array of numbers correctly (asc by default)", () => {
+  it("sorts an array of dates correctly (asc by default)", () => {
     const now = new Date();
     const arr = [now, "01-01-1970", new Date("12-12-2012")];
 
@@ -115,7 +180,7 @@ describe("chronologically", () => {
       expect(typeof chronologically.desc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (desc)", () => {
+    it("sorts an array of dates correctly (desc)", () => {
       const now = new Date();
       const arr = [now, "01-01-1970", new Date("12-12-2012")];
 
@@ -131,12 +196,56 @@ describe("chronologically", () => {
       expect(typeof chronologically.asc).toBe("function");
     });
 
-    it("sorts an array of numbers correctly (asc)", () => {
+    it("sorts an array of dates correctly (asc)", () => {
       const now = new Date();
       const arr = [now, "01-01-1970", new Date("12-12-2012")];
 
       const expected = ["01-01-1970", new Date("12-12-2012"), now];
       const actual = arr.sort(chronologically.asc);
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("chronologically.by", () => {
+    it("is a function", () => {
+      expect(typeof chronologically.by).toBe("function");
+    });
+
+    it("sorts an array of object by a date field (asc by default)", () => {
+      const arr = [
+        { name: "Bob", age: 23, date: { joined: new Date("01-01-2012") } },
+        { name: "Alice", age: 32, date: { joined: new Date("01-10-2012") } },
+        { name: "Tom", age: 60, date: { joined: new Date("01-01-2001") } },
+        { name: "Candice", age: 45, date: { joined: new Date("12-06-2020") } },
+      ];
+
+      const expected = [
+        { name: "Tom", age: 60, date: { joined: new Date("01-01-2001") } },
+        { name: "Bob", age: 23, date: { joined: new Date("01-01-2012") } },
+        { name: "Alice", age: 32, date: { joined: new Date("01-10-2012") } },
+        { name: "Candice", age: 45, date: { joined: new Date("12-06-2020") } },
+      ];
+      const actual = arr.sort(chronologically.by("date.joined"));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it("sorts an array of object by a date field (desc)", () => {
+      const arr = [
+        { name: "Bob", age: 23, date: { joined: new Date("01-01-2012") } },
+        { name: "Alice", age: 32, date: { joined: new Date("01-10-2012") } },
+        { name: "Tom", age: 60, date: { joined: new Date("01-01-2001") } },
+        { name: "Candice", age: 45, date: { joined: new Date("12-06-2020") } },
+      ];
+
+      const expected = [
+        { name: "Candice", age: 45, date: { joined: new Date("12-06-2020") } },
+        { name: "Alice", age: 32, date: { joined: new Date("01-10-2012") } },
+        { name: "Bob", age: 23, date: { joined: new Date("01-01-2012") } },
+        { name: "Tom", age: 60, date: { joined: new Date("01-01-2001") } },
+      ];
+      const actual = arr.sort(chronologically.by("-date.joined"));
 
       expect(actual).toEqual(expected);
     });
@@ -182,6 +291,50 @@ describe("numerically", () => {
 
       const expected = [1, 2, 2, 4, 23, 30];
       const actual = arr.sort(numerically.asc);
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("numerically.by", () => {
+    it("is a function", () => {
+      expect(typeof numerically.by).toBe("function");
+    });
+
+    it("sorts an array of object by a numeric field (asc by default)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Candice", age: 45 },
+        { name: "Tom", age: 60 },
+      ];
+      const actual = arr.sort(numerically.by("age"));
+
+      expect(actual).toEqual(expected);
+    });
+
+    it("sorts an array of object by a numeric field (desc)", () => {
+      const arr = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 32 },
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+      ];
+
+      const expected = [
+        { name: "Tom", age: 60 },
+        { name: "Candice", age: 45 },
+        { name: "Alice", age: 32 },
+        { name: "Bob", age: 23 },
+      ];
+      const actual = arr.sort(numerically.by("-age"));
 
       expect(actual).toEqual(expected);
     });
