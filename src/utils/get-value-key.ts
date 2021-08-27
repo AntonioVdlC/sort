@@ -1,3 +1,9 @@
+/**
+ * Get a value from an object based on a key path
+ * @param obj
+ * @param key
+ * @returns
+ */
 function getValueByKey(obj: Record<string, any>, key: string) {
   return String(key)
     .split(".")

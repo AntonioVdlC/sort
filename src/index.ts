@@ -36,4 +36,6 @@ const chronologically = createCompareFunction((date: string) =>
  */
 const numerically = createCompareFunction(Number);
 
+// TODO: add shorthand aliases: alpha, chrono, num, ...?
+// TODO: add `combine` utility function to combine sorts?
 export { alphabetically, alphabeticallyBase, chronologically, numerically };
