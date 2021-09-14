@@ -1,4 +1,42 @@
+import type { Compare } from "./types";
+
 import createCompareFunction from "./utils/create-compare-fn";
+
+/**
+ * Combine multipe sorting functions in order.
+ *
+ * Example:
+ *  [
+ *    { name: "Alice", age: 32 },
+ *    { name: "Bob", age: 45 },
+ *    { name: "Alice", age: 28 },
+ *  ].sort(combine([
+ *    alphabetically.by("name"),
+ *    numerically.by("age").desc
+ *  ]))
+ * =>
+ *  [
+ *    { name: "Alice", age: 32 },
+ *    { name: "Alice", age: 28 },
+ *    { name: "Bob", age: 45 },
+ *  ]
+ *
+ * @param sortFns List of sorting functions
+ * @returns
+ */
+function combine(sortFns: Array<Function>): Function {
+  return function (a: Compare, b: Compare): number {
+    if (sortFns.length === 1) {
+      return sortFns[0](a, b);
+    }
+
+    const result = sortFns[0](a, b);
+    if (result === 0) {
+      return combine(sortFns.slice(1))(a, b);
+    }
+    return result;
+  };
+}
 
 /**
  * Sorts arrays alphabetically (taking into account case)
@@ -36,6 +74,6 @@ const chronologically = createCompareFunction((date: string) =>
  */
 const numerically = createCompareFunction(Number);
 
+export { combine };
 // TODO: add shorthand aliases: alpha, chrono, num, ...?
-// TODO: add `combine` utility function to combine sorts?
 export { alphabetically, alphabeticallyBase, chronologically, numerically };

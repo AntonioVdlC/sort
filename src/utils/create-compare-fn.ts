@@ -1,6 +1,6 @@
-import getValueByKey from "./get-value-key";
+import type { Compare } from "../types";
 
-type Compare = string | number | Date;
+import getValueByKey from "./get-value-key";
 
 /**
  * Utility function to create custom compare function for sorting Arrays

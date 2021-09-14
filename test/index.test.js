@@ -1,9 +1,61 @@
 import {
+  combine,
   alphabetically,
   alphabeticallyBase,
   chronologically,
   numerically,
 } from "../src/index.ts";
+
+describe("combine", () => {
+  it("is a function", () => {
+    expect(typeof combine).toBe("function");
+  });
+  it("returns a function", () => {
+    expect(typeof combine()).toBe("function");
+  });
+
+  it("sorts an array correctly (if passed a single compare function)", () => {
+    const arr = [
+      { name: "Bob", age: 23 },
+      { name: "Alice", age: 32 },
+      { name: "Tom", age: 60 },
+      { name: "Candice", age: 45 },
+    ];
+
+    const expected = [
+      { name: "Alice", age: 32 },
+      { name: "Bob", age: 23 },
+      { name: "Candice", age: 45 },
+      { name: "Tom", age: 60 },
+    ];
+    const actual = arr.sort(combine([alphabetically.by("name")]));
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("sorts an array correctly (if passed multiple compare functions)", () => {
+    const arr = [
+      { name: "Bob", age: 23 },
+      { name: "Alice", age: 32 },
+      { name: "Tom", age: 60 },
+      { name: "Candice", age: 45 },
+      { name: "Alice", age: 28 },
+    ];
+
+    const expected = [
+      { name: "Alice", age: 32 },
+      { name: "Alice", age: 28 },
+      { name: "Bob", age: 23 },
+      { name: "Candice", age: 45 },
+      { name: "Tom", age: 60 },
+    ];
+    const actual = arr.sort(
+      combine([alphabetically.by("name"), numerically.by("age").desc])
+    );
+
+    expect(actual).toEqual(expected);
+  });
+});
 
 describe("alphabetically", () => {
   it("is a function", () => {

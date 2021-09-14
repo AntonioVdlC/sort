@@ -112,5 +112,31 @@ Sorts an array in chronological (date) order.
 ### numerically
 Sorts an array in numerical (number) order.
 
+## Combining sorting functions
+
+You can also combine multiple sorting functions.
+
+Let's say that for example, you need to sort an array of users first by name, and then by age (descending). You can achieve that as follows:
+
+```js
+const arr = [
+  { name: "Bob", age: 23 },
+  { name: "Alice", age: 32 },
+  { name: "Tom", age: 60 },
+  { name: "Candice", age: 45 },
+  { name: "Alice", age: 28 },
+];
+arr.sort(combine([alphabetically.by("name"), numerically.by("age").desc]));
+/*
+[
+  { name: "Alice", age: 32 },
+  { name: "Alice", age: 28 },
+  { name: "Bob", age: 23 },
+  { name: "Candice", age: 45 },
+  { name: "Tom", age: 60 },
+]
+*/
+```
+
 ## License
 MIT
