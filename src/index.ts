@@ -1,6 +1,6 @@
 import type { Compare } from "./types";
 
-import createCompareFunction from "./utils/create-compare-fn";
+import createCompareFunction from "./create-compare-fn";
 
 /**
  * Combine multipe sorting functions in order.

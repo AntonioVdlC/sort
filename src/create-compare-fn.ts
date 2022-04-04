@@ -1,6 +1,6 @@
-import type { Compare } from "../types";
+import type { Compare } from "./types";
 
-import getValueByKey from "./get-value-key";
+import getValueByKey from "get-value-key";
 
 /**
  * Utility function to create custom compare function for sorting Arrays
