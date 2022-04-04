@@ -74,5 +74,5 @@ const chronologically = createCompareFunction((date: string) =>
  */
 const numerically = createCompareFunction(Number);
 
-export { combine };
+export { combine, createCompareFunction };
 export { alphabetically, alphabeticallyBase, chronologically, numerically };

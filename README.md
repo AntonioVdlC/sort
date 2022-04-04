@@ -112,6 +112,25 @@ Sorts an array in chronological (date) order.
 ### numerically
 Sorts an array in numerical (number) order.
 
+## Creating custom sorting functions
+You can create your own sorting functions by using the `createCompareFunction()` function:
+
+```js
+import { createCompareFunction } from "@antoniovdlc/sort";
+
+const alphabeticallyLocale = createCompareFunction(String, (a, b) => a.localeCompare(b));
+
+const arr = [
+  { name: "Bob", age: 23 },
+  { name: "Alice", age: 32 },
+  { name: "Tom", age: 60 },
+  { name: "Candice", age: 45 },
+];
+arr.sort(alphabeticallyLocale.by("name").desc);
+```
+
+Out of the box, your custom sorting functions have the same attributes and methods as the default sorting functions (such as `.desc` or `.by()`)!
+
 ## Combining sorting functions
 
 You can also combine multiple sorting functions.
