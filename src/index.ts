@@ -1,4 +1,4 @@
-import type { Compare } from "./types";
+import type { Compare, CompareFunction } from "./types";
 
 import createCompareFunction from "./create-compare-fn";
 
@@ -24,7 +24,7 @@ import createCompareFunction from "./create-compare-fn";
  * @param sortFns List of sorting functions
  * @returns
  */
-function combine(sortFns: Array<Function>): Function {
+function combine(sortFns: Array<CompareFunction>): CompareFunction {
   return function (a: Compare, b: Compare): number {
     if (sortFns.length === 1) {
       return sortFns[0](a, b);

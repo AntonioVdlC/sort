@@ -1,17 +1,20 @@
+import { describe, it, expect } from "vitest";
+
 import {
   combine,
+  createCompareFunction,
   alphabetically,
   alphabeticallyBase,
   chronologically,
   numerically,
-} from "../src/index.ts";
+} from "../src";
 
 describe("combine", () => {
   it("is a function", () => {
     expect(typeof combine).toBe("function");
   });
   it("returns a function", () => {
-    expect(typeof combine()).toBe("function");
+    expect(typeof combine([])).toBe("function");
   });
 
   it("sorts an array correctly (if passed a single compare function)", () => {
@@ -52,6 +55,34 @@ describe("combine", () => {
     const actual = arr.sort(
       combine([alphabetically.by("name"), numerically.by("age").desc])
     );
+
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("createCompareFunction", () => {
+  it("is a function", () => {
+    expect(typeof createCompareFunction).toBe("function");
+  });
+  it("returns a well-formed sorting functions", () => {
+    const compareFunction = createCompareFunction();
+
+    expect(typeof compareFunction).toBe("function");
+    expect(typeof compareFunction.asc).toBe("function");
+    expect(typeof compareFunction.desc).toBe("function");
+    expect(typeof compareFunction.by).toBe("function");
+    expect(typeof compareFunction.by("")).toBe("function");
+    expect(typeof compareFunction.by("").asc).toBe("function");
+    expect(typeof compareFunction.by("").desc).toBe("function");
+  });
+
+  it("defaults to creating a sorting function that sorts on Strings in ascending order", () => {
+    const compareFunction = createCompareFunction();
+
+    const arr = [1, 2, 2, 23, 30, 4];
+
+    const expected = [1, 2, 2, 23, 30, 4];
+    const actual = arr.sort(compareFunction);
 
     expect(actual).toEqual(expected);
   });
@@ -179,6 +210,7 @@ describe("alphabetically", () => {
         { name: "Tom", age: 60 },
         null,
       ];
+      // @ts-expect-error
       const actual = arr.sort(alphabetically.by("name"));
 
       expect(actual).toEqual(expected);

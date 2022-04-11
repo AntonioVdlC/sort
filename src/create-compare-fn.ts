@@ -1,4 +1,4 @@
-import type { Compare } from "./types";
+import type { Compare, CompareFunction, SortFunction } from "./types";
 
 import getValueByKey from "get-value-key";
 
@@ -10,9 +10,12 @@ import getValueByKey from "get-value-key";
  */
 function createCompareFunction(
   coerceType: Function = String,
-  compareFn: Function = (a: Compare, b: Compare, direction: number = 1) =>
-    a < b ? -1 * direction : a > b ? 1 * direction : 0
-): Function {
+  compareFn: CompareFunction = (
+    a: Compare,
+    b: Compare,
+    direction: number = 1
+  ) => (a < b ? -1 * direction : a > b ? 1 * direction : 0)
+): SortFunction {
   /**
    * Compare function with coerced types and a direction (default = 1)
    * @param a
