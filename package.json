@@ -55,7 +55,7 @@
     "tslib": "^2.3.0",
     "typescript": "^4.3.4",
     "vite": "^2.9.1",
-    "vitest": "^0.9.3"
+    "vitest": "^0.28.5"
   },
   "dependencies": {
     "get-value-key": "^0.1.0"
